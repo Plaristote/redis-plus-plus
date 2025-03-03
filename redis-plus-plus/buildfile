@@ -2,13 +2,16 @@ import libs = hiredis%lib{hiredis-ssl}
 
 lib{redis-plus-plus}: libul{redis-plus-plus}: \
     src/sw/redis++/{cxx hxx}{command command_options connection connection_pool errors pipeline redis redis_cluster reply sentinel shards shards_pool subscriber transaction} \
-    src/sw/redis++/cxx17/hxx{cxx_utils} \
-    src/sw/redis++/tls/{cxx hxx}{tls} \
+    src/sw/redis++/cxx17/sw/redis++/hxx{cxx_utils} \
+    src/sw/redis++/tls/sw/redis++/{cxx hxx}{tls} \
+    src/sw/redis++/future/std/sw/redis++/{hxx}{async_utils} \
     src/sw/redis++/cxx{crc16} \
-    src/sw/redis++/hxx{queued_redis queued_redis.hpp redis.hpp redis_cluster.hpp utils redis++ cmd_formatter command_args} \
+    src/sw/redis++/hxx{queued_redis queued_redis.hpp redis.hpp redis_cluster.hpp utils redis++ cmd_formatter command_args hiredis_features} \
     $libs
 lib{redis-plus-plus}: def{redis-plus-plus}: include = ($cxx.target.system == 'win32-msvc')
 def{redis-plus-plus}: libul{redis-plus-plus}
+
+hxx{src/sw/redis++/hiredis_features}: in{hiredis_features}
 
 if ($cxx.target.class == 'windows')
 {
@@ -20,11 +23,11 @@ if ($cxx.target.class == 'linux')
     cxx.libs =+ "-lpthread"
 }
 
-cxx.poptions =+ "-I$src_base/src" "-I$src_base/src/sw/redis++" "-I$src_base/src/sw/redis++/cxx17" "-I$src_base/src/sw/redis++/tls"
+cxx.poptions =+ "-I$src_base/src" "-I$src_base/src/sw/redis++" "-I$src_base/src/sw/redis++/cxx17/sw/redis++" "-I$src_base/src/sw/redis++/tls/sw/redis++" "-I$src_base/src/sw/redis++/future/std/sw/redis++"
 
 lib{redis-plus-plus}:
 {
-  cxx.export.poptions += "-I$src_base/src" "-I$src_base/src/sw/redis++" "-I$src_base/src/sw/redis++/cxx17" "-I$src_base/src/sw/redis++/tls"
+  cxx.export.poptions += "-I$src_base/src" "-I$src_base/src/sw/redis++" "-I$src_base/src/sw/redis++/cxx17/sw/redis++" "-I$src_base/src/sw/redis++/tls/sw/redis++" "-I$src_base/src/sw/redis++/future/std/sw/redis++"
   cxx.export.libs += $libs
 }
 
@@ -34,13 +37,19 @@ src/hxx{*}:
     install.subdirs = true
 }
 
-src/sw/redis++/cxx17/hxx{*}:
+src/sw/redis++/cxx17/sw/redis++/hxx{*}:
 {
     install = include/sw/redis++/
     install.subdirs = false
 }
 
-src/sw/redis++/tls/hxx{*}:
+src/sw/redis++/tls/sw/redis++/hxx{*}:
+{
+    install = include/sw/redis++/
+    install.subdirs = false
+}
+
+src/sw/redis++/future/std/sw/redis++/hxx{*}:
 {
     install = include/sw/redis++/
     install.subdirs = false
