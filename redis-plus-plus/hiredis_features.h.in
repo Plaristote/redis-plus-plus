@@ -1,5 +1,4 @@
-/*
- * TODO: find a way to properly set that define.
- * It should be enabled when hiredis.h defines a function named redisEnableKeepAliveWithInterval
-#define REDIS_PLUS_PLUS_HAS_redisEnableKeepAliveWithInterval
-*/
+#include <hiredis/hiredis.h>
+#if HIREDIS_MAJOR == 1 && HIREDIS_MINOR >= 2
+# define REDIS_PLUS_PLUS_HAS_redisEnableKeepAliveWithInterval
+#endif
