@@ -23,11 +23,11 @@ if ($cxx.target.class == 'linux')
     cxx.libs =+ "-lpthread"
 }
 
-cxx.poptions =+ "-I$src_base/src" "-I$src_base/src/sw/redis++" "-I$src_base/src/sw/redis++/cxx17/sw/redis++" "-I$src_base/src/sw/redis++/tls/sw/redis++" "-I$src_base/src/sw/redis++/future/std/sw/redis++"
+cxx.poptions =+ "-I$out_base/src" "-I$out_base/src/sw/redis++" "-I$src_base/src" "-I$src_base/src/sw/redis++" "-I$src_base/src/sw/redis++/cxx17/sw/redis++" "-I$src_base/src/sw/redis++/tls/sw/redis++" "-I$src_base/src/sw/redis++/future/std/sw/redis++"
 
 lib{redis-plus-plus}:
 {
-  cxx.export.poptions += "-I$src_base/src" "-I$src_base/src/sw/redis++" "-I$src_base/src/sw/redis++/cxx17/sw/redis++" "-I$src_base/src/sw/redis++/tls/sw/redis++" "-I$src_base/src/sw/redis++/future/std/sw/redis++"
+  cxx.export.poptions += "-I$out_base/src" "-I$out_base/src/sw/redis++" "-I$src_base/src" "-I$src_base/src/sw/redis++" "-I$src_base/src/sw/redis++/cxx17/sw/redis++" "-I$src_base/src/sw/redis++/tls/sw/redis++" "-I$src_base/src/sw/redis++/future/std/sw/redis++"
   cxx.export.libs += $libs
 }
 
